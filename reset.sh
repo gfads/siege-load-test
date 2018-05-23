@@ -2,7 +2,10 @@
 
 export MYSQL_ROOT_PASSWORD=""
 
-COMPOSE_FILE=/home/embs/Code/microservices-demo/microservices-demo/deploy/docker-compose/docker-compose.yml
+if ! [ $COMPOSE_FILE ] || ! [ -a $COMPOSE_FILE ]; then
+  echo COMPOSE_FILE envar must be set to an existing file
+  exit 1
+fi
 
 function wait4spring {
   echo Waiting for $1 service to be ready...
