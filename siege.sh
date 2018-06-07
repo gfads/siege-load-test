@@ -37,3 +37,5 @@ for i in {1..1000}; do
     $SERVER/orders >> log.csv
   sleep $(Rscript ./generate_random_number.r | awk {'print $2'})
 done
+
+kill -- -$$
