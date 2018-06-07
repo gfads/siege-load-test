@@ -20,6 +20,12 @@ curl -XPOST -b cookies.txt -H 'Content-Type: application/json' \
   $SERVER/cart
 
 #
+# Start CPU and RAM monitoring.
+#
+./rammon.sh &
+./cpumon.sh &
+
+#
 # Checkout
 #
 for i in {1..1000}; do
