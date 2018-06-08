@@ -25,6 +25,7 @@ for(scenario in scenarios) {
 # Bar plot with error bars.
 plotdata <- data.frame(scenarios, means, errs)
 colnames(plotdata) <- c('scenario', 'mean', 'err')
+print(plotdata)
 plot <- ggplot(data=plotdata, aes(x=scenario, y=mean)) +
                 geom_bar(stat="identity") +
                 geom_errorbar(aes(ymin=mean-err, ymax=mean+err),
