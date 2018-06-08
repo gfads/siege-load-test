@@ -2,6 +2,6 @@
 
 while :
 do
-  top -bn1 | grep load | awk '{printf "%.2f\t\t\n", $(NF-2)}' >> cpu.log
+  top -bn1 | grep CPU | head -n 1 | echo $((100 - $(awk '{printf "%d\n", $8}'))) >> cpu.log
   sleep 1
 done
