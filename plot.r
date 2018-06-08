@@ -34,3 +34,29 @@ plot <- ggplot(data=plotdata, aes(x=scenario, y=mean)) +
 png(filename=paste(plotsdir, 'means.png', sep=''))
 print(plot)
 dev.off()
+
+pdf(NULL) # Avoid creating Rplots.pdf
+
+# Overhead bar plot.
+overhead = c()
+overerrs = c()
+overhead["instrumented"] = means["instrumented"] / means["no_tracing"]
+overhead["rbinder"] = means["rbinder"] / means["no_tracing"]
+overerrs["instrumented"] = errs["instrumented"] / means["no_tracing"]
+overerrs["rbinder"] = errs["rbinder"] / means["no_tracing"]
+scenarios <- c("Instrumented Microservices", "Proxies + Syscalls Monitoring")
+overdata <- data.frame(scenarios, overhead, overerrs)
+colnames(overdata) <- c('scenario', 'overhead', 'err')
+print(overdata)
+theme_set(theme_bw())
+fills <- c("instr", "rbinder")
+plot <- ggplot(data=overdata, aes(x=scenario, y=overhead, fill=fills)) +
+                geom_bar(stat="identity", colour="black") +
+                geom_errorbar(aes(ymin=overhead-err, ymax=overhead+err),
+                              width=.2,
+                              position=position_dodge(.9))
+
+plot + labs(x="", y="Response Time Overhead") +
+  coord_cartesian(ylim=c(0, 1.3)) +
+  scale_fill_manual("legend", values = c("instr" = "white", "rbinder" = "gray"), guide=FALSE)
+ggsave(filename=paste(plotsdir, 'overhead.pdf', sep=''))
