@@ -38,4 +38,8 @@ for i in {1..1000}; do
   sleep $(Rscript ./generate_random_number.r | awk {'print $2'})
 done
 
-kill -- -$$
+#
+# Kill monitoring processes.
+#
+ps aux | grep cpumon | awk 'NR==1{print $1}' | xargs kill -9
+ps aux | grep rammon | awk 'NR==1{print $1}' | xargs kill -9
