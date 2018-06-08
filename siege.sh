@@ -29,6 +29,18 @@ curl -XPOST -b cookies.txt -H 'Content-Type: application/json' \
 # Checkout
 #
 for i in {1..1000}; do
+  if [[ $i == 500 ]]; then
+    curl -s -c cookies.txt -H 'Authorization: Basic dXNlcjpwYXNzd29yZA==' \
+      $SERVER/login > /dev/null
+
+    logdn=$(cat cookies.txt | tail -n 2 | head -n 1 | awk '{print $6"="$7}')
+    mdsid=$(cat cookies.txt | tail -n 1 | awk '{print $6"="$7}')
+    cooke="Cookie: $logdn; $mdsid"
+    curl -XPOST -b cookies.txt -H 'Content-Type: application/json' \
+      -d '{"id":"510a0d7e-8e83-4193-b483-e27e09ddc34d"}' \
+      $SERVER/cart
+  fi
+
   curl -XPOST \
     -s \
     -b cookies.txt \
