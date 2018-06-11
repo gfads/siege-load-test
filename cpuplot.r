@@ -47,4 +47,4 @@ p <- ggplot(df, aes(x=time, y=cpu, shape=scenario)) +
                               "Proxies + Syscalls Monitoring")
                      )
 
-ggsave(filename=paste(plotsdir, 'cpu.pdf', sep=''), width=10)
+ggsave(filename=paste(plotsdir, 'cpu.pdf', sep=''), height=3)

@@ -59,4 +59,4 @@ plot <- ggplot(data=overdata, aes(x=scenario, y=overhead, fill=fills)) +
 plot + labs(x="", y="Response Time Overhead") +
   coord_cartesian(ylim=c(0, 1.3)) +
   scale_fill_manual("legend", values = c("instr" = "white", "rbinder" = "gray"), guide=FALSE)
-ggsave(filename=paste(plotsdir, 'overhead.pdf', sep=''))
+ggsave(filename=paste(plotsdir, 'overhead.pdf', sep=''), height=3)
