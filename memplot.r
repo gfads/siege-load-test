@@ -45,7 +45,7 @@ p <- ggplot(df, aes(x=time, y=memory, group=scenario, shape=scenario)) +
                      values=c(1, 6, 17),
                      labels=c("No Tracing",
                               "Instrumented Microservices",
-                              "Proxies + Syscalls Monitoring")
+                              "Rbinder")
                      )
 
 ggsave(filename=paste(plotsdir, 'mem.pdf', sep=''), height=3)

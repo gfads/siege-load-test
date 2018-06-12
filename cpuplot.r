@@ -44,7 +44,7 @@ p <- ggplot(df, aes(x=time, y=cpu, shape=scenario)) +
                      values=c(1, 6, 17),
                      labels=c("No Tracing",
                               "Instrumented Microservices",
-                              "Proxies + Syscalls Monitoring")
+                              "Rbinder")
                      ) +
   theme(legend.position="bottom")
 
