@@ -1,5 +1,7 @@
 #!/usr/bin/env Rscript
 
+pdf(NULL) # Avoid creating Rplots.pdf
+
 library(ggplot2)
 
 scenarios <- sub('.log', '', list.files('./log'))
@@ -23,19 +25,24 @@ for(scenario in scenarios) {
 }
 
 # Bar plot with error bars.
+scenarios <- c('Instrumented Microservices', 'No Tracing', 'Rbinder')
 plotdata <- data.frame(scenarios, means, errs)
 colnames(plotdata) <- c('scenario', 'mean', 'err')
 print(plotdata)
-plot <- ggplot(data=plotdata, aes(x=scenario, y=mean)) +
-                geom_bar(stat="identity") +
+theme_set(theme_bw())
+fills <- c("instr", "no_tracing", "rbinder")
+plot <- ggplot(data=plotdata, aes(x=scenario, y=mean, fill=fills)) +
+                geom_bar(stat="identity", colour="black", width=.5) +
                 geom_errorbar(aes(ymin=mean-err, ymax=mean+err),
                               width=.2,
                               position=position_dodge(.9))
-png(filename=paste(plotsdir, 'means.png', sep=''))
-print(plot)
-dev.off()
-
-pdf(NULL) # Avoid creating Rplots.pdf
+plot + labs(x="", y="Response Time (s)") +
+  scale_fill_manual("legend",
+                    values = c("instr"="white",
+                               "rbinder"="white",
+                               "no_tracing"="white"),
+                    guide=FALSE)
+ggsave(filename=paste(plotsdir, 'means.pdf', sep=''), height=3)
 
 # Overhead bar plot.
 overhead = c()
@@ -49,7 +56,6 @@ overdata <- data.frame(scenarios, overhead, overerrs)
 colnames(overdata) <- c('scenario', 'overhead', 'err')
 print(means["no_tracing"])
 print(overdata)
-theme_set(theme_bw())
 fills <- c("instr", "rbinder")
 plot <- ggplot(data=overdata, aes(x=scenario, y=overhead, fill=fills)) +
                 geom_bar(stat="identity", colour="black") +
