@@ -45,6 +45,7 @@ p <- ggplot(df, aes(x=time, y=cpu, shape=scenario)) +
                      labels=c("No Tracing",
                               "Instrumented Microservices",
                               "Proxies + Syscalls Monitoring")
-                     )
+                     ) +
+  theme(legend.position="bottom")
 
 ggsave(filename=paste(plotsdir, 'cpu.pdf', sep=''), height=3)
