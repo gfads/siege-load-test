@@ -47,6 +47,7 @@ overerrs["rbinder"] = errs["rbinder"] / means["no_tracing"]
 scenarios <- c("Instrumented Microservices", "Proxies + Syscalls Monitoring")
 overdata <- data.frame(scenarios, overhead, overerrs)
 colnames(overdata) <- c('scenario', 'overhead', 'err')
+print(means["no_tracing"])
 print(overdata)
 theme_set(theme_bw())
 fills <- c("instr", "rbinder")
