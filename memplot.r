@@ -40,7 +40,7 @@ p <- ggplot(df, aes(x=time, y=memory, group=scenario, shape=scenario)) +
   #geom_line() +
   geom_point() +
   xlim(c(0, 80)) +
-  labs(x="Time (min)", y="Memory Consumption (MB)") +
+  labs(x="Time (min)", y="RAM Usage (MB)") +
   scale_shape_manual(name="Scenario",
                      values=c(1, 6, 17),
                      labels=c("No Tracing",
