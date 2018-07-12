@@ -44,7 +44,7 @@ p <- ggplot(df, aes(x=time, y=memory, group=scenario, shape=scenario)) +
   scale_shape_manual(name="Scenario",
                      values=c(1, 6, 17),
                      labels=c("No Tracing",
-                              "Instrumented Microservices",
+                              "Instrumented\nMicroservices",
                               "Rbinder")
                      )
 
