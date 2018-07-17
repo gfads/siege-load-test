@@ -25,17 +25,18 @@ for(scenario in scenarios) {
 }
 
 # Bar plot with error bars.
-scenarios <- c('Instrumented Microservices', 'No Tracing', 'Rbinder')
+scenarios <- c('Instrumented\nMicroservices', 'No Tracing', 'Rbinder')
 plotdata <- data.frame(scenarios, means, errs)
 colnames(plotdata) <- c('scenario', 'mean', 'err')
 print(plotdata)
 theme_set(theme_bw())
 fills <- c("instr", "no_tracing", "rbinder")
 plot <- ggplot(data=plotdata, aes(x=scenario, y=mean, fill=fills)) +
-                geom_bar(stat="identity", colour="black", width=.5) +
+                geom_bar(stat="identity", colour="black", width=.2) +
                 geom_errorbar(aes(ymin=mean-err, ymax=mean+err),
-                              width=.2,
-                              position=position_dodge(.9))
+                              width=.05,
+                              position=position_dodge(.9)) +
+                theme(text = element_text(size=18))
 plot + labs(x="", y="Response Time (s)") +
   scale_fill_manual("legend",
                     values = c("instr"="white",
