@@ -46,6 +46,8 @@ p <- ggplot(df, aes(x=time, y=memory, group=scenario, shape=scenario)) +
                      labels=c("No Tracing",
                               "Instrumented\nMicroservices",
                               "Rbinder")
-                     )
+                     ) +
+  theme(legend.position="top",
+        text = element_text(size=18))
 
 ggsave(filename=paste(plotsdir, 'mem.pdf', sep=''), height=3)
