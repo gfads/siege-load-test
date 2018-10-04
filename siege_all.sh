@@ -13,16 +13,20 @@ cd ~/microservices-demo && git checkout master && cd -
 COMPOSE_FILE=~/microservices-demo/deploy/docker-compose/docker-compose.yml
 docker-compose -f $COMPOSE_FILE up -d
 sleep $WAIT_FOR_CONTAINERS_TO_START
+ls /sys/class/net | grep veth | xargs -n1 -I interface tc qdisc add dev interface root netem delay 60ms
 SERVER=localhost ./siege.sh
 mv log.csv log/no_tracing.log
+ls /sys/class/net | grep veth | xargs -n1 -I interface tc qdisc del dev interface root netem
 docker-compose -f $COMPOSE_FILE down
 
 # instrumented
 COMPOSE_FILE=~/microservices-demo-devops/docker-compose.yml
 docker-compose -f $COMPOSE_FILE up -d
 sleep $WAIT_FOR_CONTAINERS_TO_START
+ls /sys/class/net | grep veth | xargs -n1 -I interface tc qdisc add dev interface root netem delay 60ms
 SERVER=localhost ./siege.sh
 mv log.csv log/instrumented.log
+ls /sys/class/net | grep veth | xargs -n1 -I interface tc qdisc del dev interface root netem
 docker-compose -f $COMPOSE_FILE down
 
 # rbinder
@@ -33,6 +37,8 @@ export ORDERS_ENVOY_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{
 echo $ORDERS_ENVOY_IP
 docker-compose -f $COMPOSE_FILE up -d
 sleep $WAIT_FOR_CONTAINERS_TO_START
+ls /sys/class/net | grep veth | xargs -n1 -I interface tc qdisc add dev interface root netem delay 60ms
 SERVER=localhost ./siege.sh
 mv log.csv log/rbinder.log
+ls /sys/class/net | grep veth | xargs -n1 -I interface tc qdisc del dev interface root netem
 docker-compose -f $COMPOSE_FILE down

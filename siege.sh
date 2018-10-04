@@ -29,7 +29,7 @@ curl -XPOST -b cookies.txt -H 'Content-Type: application/json' \
 # Checkout
 #
 for i in {1..1000}; do
-  if [[ $i == 500 ]]; then
+  if [[ $i == 250 || $i == 500 || $i == 750 ]]; then
     curl -s -c cookies.txt -H 'Authorization: Basic dXNlcjpwYXNzd29yZA==' \
       $SERVER/login > /dev/null
 
